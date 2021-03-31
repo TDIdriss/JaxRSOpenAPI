@@ -3,6 +3,7 @@ package fr.istic.taa.jaxrs.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import io.swagger.v3.oas.models.tags.Tag;
 
 @XmlRootElement(name = "Pet")
+@Entity
 public class Pet {
   private long id;
   private String name;
