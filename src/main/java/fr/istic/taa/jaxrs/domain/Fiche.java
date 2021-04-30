@@ -16,14 +16,8 @@ public class Fiche implements Serializable {
     private String note;
     private String temps;
     private String url;
-
-
     private List<Tags> tagsF = new ArrayList<>();
-
-
     private Section sectionF;
-
-
     private User owner;
 
 

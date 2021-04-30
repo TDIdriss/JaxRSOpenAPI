@@ -8,25 +8,25 @@ import java.util.List;
 public class TagDao extends AbstractJpaDao<Long, Tags> {
 
     public void save(Tags tag) {
-        EntityTransaction t = this.entityManager.getTransaction();
+        EntityTransaction t = EntityManagerHelper.getEntityManager().getTransaction();
         t.begin();
-        entityManager.persist(tag);
+        EntityManagerHelper.getEntityManager().persist(tag);
         t.commit();
     }
 
     public void delete(Tags tag) {
-        EntityTransaction t = this.entityManager.getTransaction();
+        EntityTransaction t = EntityManagerHelper.getEntityManager().getTransaction();
         t.begin();
-        entityManager.remove(tag);
+        EntityManagerHelper.getEntityManager().remove(tag);
         t.commit();
     }
 
     public List<Tags> listTags() {
-        return this.entityManager.createQuery("Select t From Fiche t", Tags.class).getResultList();
+        return EntityManagerHelper.getEntityManager().createQuery("Select t From Fiche t", Tags.class).getResultList();
     }
 
     public Tags tagsById(Long id) {
-        return this.entityManager.createQuery("Select t From Fiche t Where t.id = :id ", Tags.class).setParameter("id",id).getSingleResult();
+        return EntityManagerHelper.getEntityManager().createQuery("Select t From Fiche t Where t.id = :id ", Tags.class).setParameter("id",id).getSingleResult();
 
     }
 }

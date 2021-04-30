@@ -6,25 +6,25 @@ import java.util.List;
 public class SectionDao extends AbstractJpaDao<Long, Section>{
 
     public void save(Section section) {
-        EntityTransaction t = this.entityManager.getTransaction();
+        EntityTransaction t = EntityManagerHelper.getEntityManager().getTransaction();
         t.begin();
-        entityManager.persist(section);
+        EntityManagerHelper.getEntityManager().persist(section);
         t.commit();
     }
 
     public void delete(Section section) {
-        EntityTransaction t = this.entityManager.getTransaction();
+        EntityTransaction t = EntityManagerHelper.getEntityManager().getTransaction();
         t.begin();
-        entityManager.remove(section);
+        EntityManagerHelper.getEntityManager().remove(section);
         t.commit();
     }
 
     public List<Section> listSection() {
-        return this.entityManager.createQuery("Select s From Section s", Section.class).getResultList();
+        return EntityManagerHelper.getEntityManager().createQuery("Select s From Section s", Section.class).getResultList();
     }
 
     public Section sectionById(Long id) {
-        return this.entityManager.createQuery("Select s From Section s Where s.id = :id ", Section.class).setParameter("id",id).getSingleResult();
+        return EntityManagerHelper.getEntityManager().createQuery("Select s From Section s Where s.id = :id ", Section.class).setParameter("id",id).getSingleResult();
 
     }
 }
