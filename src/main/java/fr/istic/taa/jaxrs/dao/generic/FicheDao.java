@@ -1,34 +1,30 @@
 package fr.istic.taa.jaxrs.dao.generic;
-
-
-import jpa.domain.Fiche;
-
-import javax.persistence.EntityManager;
+import fr.istic.taa.jaxrs.domain.Fiche;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class FicheDao {
+public class FicheDao extends AbstractJpaDao<Long, Fiche> {
 
-    private EntityManager manager;
-
-public FicheDao(EntityManager manager){
-    this.manager = manager;
-}
-    public void createFiche(Fiche fiche){
-
-    int numOfFiche = manager.createQuery("Select a From Fiche a", Fiche.class).getResultList().size();
-        if (numOfFiche == 0) {
-            manager.persist(fiche);
-
-        }
+    public void save(Fiche fiche) {
+        EntityTransaction t = EntityManagerHelper.getEntityManager().getTransaction();
+        t.begin();
+        entityManager.persist(fiche);
+        t.commit();
     }
 
+    public void delete(Fiche fiche) {
+        EntityTransaction t = this.entityManager.getTransaction();
+        t.begin();
+        entityManager.remove(fiche);
+        t.commit();
+    }
 
     public List<Fiche> listFiche() {
-        return manager.createQuery("Select a From Fiche a", Fiche.class).getResultList();
+        return this.entityManager.createQuery("Select f From Fiche f", Fiche.class).getResultList();
     }
 
     public Fiche ficheById(Long id) {
-        return manager.createQuery("Select a From Fiche a Where a.id = :id ", Fiche.class).setParameter("id",id).getSingleResult();
+        return this.entityManager.createQuery("Select f From Fiche f Where f.id = :id ", Fiche.class).setParameter("id",id).getSingleResult();
 
     }
 }

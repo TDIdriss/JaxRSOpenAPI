@@ -18,12 +18,8 @@ package fr.istic.taa.jaxrs;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.ws.rs.core.Application;
-
-import fr.istic.taa.jaxrs.rest.FicheResource;
-import fr.istic.taa.jaxrs.rest.PetResource;
-import fr.istic.taa.jaxrs.rest.SwaggerResource;
+import fr.istic.taa.jaxrs.rest.*;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 
 public class TestApplication extends Application {
@@ -36,6 +32,9 @@ public class TestApplication extends Application {
 
         clazzes.add(PetResource.class);
         clazzes.add(FicheResource.class);
+        clazzes.add(UserResource.class);
+        clazzes.add(TagResource.class);
+        clazzes.add(SectionResource.class);
         clazzes.add(OpenApiResource.class);
         clazzes.add(SwaggerResource.class);
 

@@ -1,32 +1,32 @@
 package fr.istic.taa.jaxrs.dao.generic;
 
-import jpa.domain.Tags;
-
-import javax.persistence.EntityManager;
+import fr.istic.taa.jaxrs.domain.Tags;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class TagDao {
 
-    private EntityManager manager;
+public class TagDao extends AbstractJpaDao<Long, Tags> {
 
-    public TagDao(EntityManager manager) {
-        this.manager = manager;
+    public void save(Tags tag) {
+        EntityTransaction t = this.entityManager.getTransaction();
+        t.begin();
+        entityManager.persist(tag);
+        t.commit();
     }
 
-    public void createTag(Tags tag ){
-        manager.persist(tag);
+    public void delete(Tags tag) {
+        EntityTransaction t = this.entityManager.getTransaction();
+        t.begin();
+        entityManager.remove(tag);
+        t.commit();
     }
 
-    public void listTags(){
-        List<Tags> resultList = manager.createQuery("Select a From Tags a", Tags.class).getResultList();
-        System.out.println("num of Tags:" + resultList.size());
-        for (Tags next : resultList) {
-            System.out.println("next Tags: " + next);
-        }
+    public List<Tags> listTags() {
+        return this.entityManager.createQuery("Select t From Fiche t", Tags.class).getResultList();
     }
 
-    public Tags chooseTag(Long id){
+    public Tags tagsById(Long id) {
+        return this.entityManager.createQuery("Select t From Fiche t Where t.id = :id ", Tags.class).setParameter("id",id).getSingleResult();
 
-        return manager.createQuery("Select a From Tags a Where a.id = :id ", Tags.class).setParameter("id",id).getSingleResult();
     }
 }

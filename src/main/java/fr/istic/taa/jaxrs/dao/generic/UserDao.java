@@ -1,46 +1,32 @@
 package fr.istic.taa.jaxrs.dao.generic;
 
-import jpa.domain.User;
+import fr.istic.taa.jaxrs.domain.User;
+import javax.persistence.EntityTransaction;
+import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+public class UserDao extends AbstractJpaDao<Long, User> {
 
-public class UserDao {
-
-    private EntityManager manager;
-
-    public UserDao(EntityManager manager) {
-        this.manager = manager;
+    public void save(User user) {
+        EntityTransaction t = this.entityManager.getTransaction();
+        t.begin();
+        entityManager.persist(user);
+        t.commit();
     }
 
-    public void createUser(User user ){
-        manager.persist(user);
+    public void delete(User user) {
+        EntityTransaction t = this.entityManager.getTransaction();
+        t.begin();
+        entityManager.remove(user);
+        t.commit();
     }
 
-    public void listUser(){
-       // List<User> resultList = manager.createQuery("Select a From User a", User.class).getResultList();
-
-        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
-// assuming a is an Integer
-// if returning multiple fields, look into using a Tuple
-//    or specifying the return type as an Object or Object[]
-        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-        Root<User> from = query.from(User.class);
-        query.select(from.get("a"));
-                //.where(from.get("a").in(1, 2, 3, 4));
-
-
-
-        System.out.println("num of User:" + resultList.size());
-        for (User next : resultList) {
-            System.out.println("next User: " + next);
-        }
+    public List<User> listUsers() {
+        return this.entityManager.createQuery("Select u From Fiche u", User.class).getResultList();
     }
 
-    public User chooseUser(Long id){
+    public User userById(Long id) {
+        return this.entityManager.createQuery("Select u From Fiche u Where u.id = :id ", User.class).setParameter("id",id).getSingleResult();
 
-        return manager.createQuery("Select a From User a Where a.id = :id ", User.class).setParameter("id",id).getSingleResult();
     }
+
 }

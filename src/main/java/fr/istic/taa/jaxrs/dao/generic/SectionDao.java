@@ -1,32 +1,30 @@
 package fr.istic.taa.jaxrs.dao.generic;
-
-//import jpa.domain.Section;
-
-import javax.persistence.EntityManager;
+import fr.istic.taa.jaxrs.domain.Section;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class SectionDao {
+public class SectionDao extends AbstractJpaDao<Long, Section>{
 
-    private EntityManager manager;
-
-    public SectionDao(EntityManager manager) {
-        this.manager = manager;
+    public void save(Section section) {
+        EntityTransaction t = this.entityManager.getTransaction();
+        t.begin();
+        entityManager.persist(section);
+        t.commit();
     }
 
-    public void createSection(Section section){
-        manager.persist(section);
+    public void delete(Section section) {
+        EntityTransaction t = this.entityManager.getTransaction();
+        t.begin();
+        entityManager.remove(section);
+        t.commit();
     }
 
-    public void listSection(){
-        List<Section> resultList = manager.createQuery("Select a From Section a", Section.class).getResultList();
-        System.out.println("num of section:" + resultList.size());
-        for (Section next : resultList) {
-            System.out.println("next section: " + next);
-        }
+    public List<Section> listSection() {
+        return this.entityManager.createQuery("Select s From Section s", Section.class).getResultList();
     }
 
-    public Section chooseSection(Long id){
+    public Section sectionById(Long id) {
+        return this.entityManager.createQuery("Select s From Section s Where s.id = :id ", Section.class).setParameter("id",id).getSingleResult();
 
-        return manager.createQuery("Select a From Tags a Where a.id = :id ", Section.class).setParameter("id",id).getSingleResult();
     }
 }
