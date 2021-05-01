@@ -8,8 +8,8 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/section")
-@Produces({"application/json", "application/xml"})
-
+@Produces("application/json")
+@Consumes("application/json")
 public class SectionResource {
     SectionDao sectionDao= new SectionDao();
 

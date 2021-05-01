@@ -22,11 +22,11 @@ public class TagDao extends AbstractJpaDao<Long, Tags> {
     }
 
     public List<Tags> listTags() {
-        return EntityManagerHelper.getEntityManager().createQuery("Select t From Fiche t", Tags.class).getResultList();
+        return EntityManagerHelper.getEntityManager().createQuery("Select t From Tags t", Tags.class).getResultList();
     }
 
     public Tags tagsById(Long id) {
-        return EntityManagerHelper.getEntityManager().createQuery("Select t From Fiche t Where t.id = :id ", Tags.class).setParameter("id",id).getSingleResult();
+        return EntityManagerHelper.getEntityManager().createQuery("Select t From Tags t Where t.id = :id ", Tags.class).setParameter("id",id).getSingleResult();
 
     }
 }

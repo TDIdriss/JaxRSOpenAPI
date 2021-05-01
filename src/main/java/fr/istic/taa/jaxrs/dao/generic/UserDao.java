@@ -21,11 +21,11 @@ public class UserDao extends AbstractJpaDao<Long, User> {
     }
 
     public List<User> listUsers() {
-        return EntityManagerHelper.getEntityManager().createQuery("Select u From Fiche u", User.class).getResultList();
+        return EntityManagerHelper.getEntityManager().createQuery("Select u From User u", User.class).getResultList();
     }
 
     public User userById(Long id) {
-        return EntityManagerHelper.getEntityManager().createQuery("Select u From Fiche u Where u.id = :id ", User.class).setParameter("id",id).getSingleResult();
+        return EntityManagerHelper.getEntityManager().createQuery("Select u From User u Where u.id = :id ", User.class).setParameter("id",id).getSingleResult();
 
     }
 

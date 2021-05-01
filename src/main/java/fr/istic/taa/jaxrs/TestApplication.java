@@ -30,7 +30,7 @@ public class TestApplication extends Application {
 
         final Set<Class<?>> clazzes = new HashSet<Class<?>>();
 
-        clazzes.add(PetResource.class);
+        //clazzes.add(PetResource.class);
         clazzes.add(FicheResource.class);
         clazzes.add(UserResource.class);
         clazzes.add(TagResource.class);

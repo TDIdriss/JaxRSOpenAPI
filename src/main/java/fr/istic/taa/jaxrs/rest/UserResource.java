@@ -4,24 +4,26 @@ import fr.istic.taa.jaxrs.dao.generic.UserDao;
 import fr.istic.taa.jaxrs.domain.User;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 
 @Path("/user")
-@Produces({"application/json", "application/xml"})
+@Produces("application/json")
+@Consumes("application/json")
 public class UserResource {
 
     UserDao userDao= new UserDao();
 
     @GET
     @Path("/{userId}")
-    public User getUserById(@PathParam("userId") Long userId)  {
-        return userDao.userById(userId);
+    public Response getUserById(@PathParam("userId") Long userId)  {
+        return Response.status(200).entity(userDao.userById(userId)).build();
     }
 
     @GET
-    public List<User> getUser()  {
-        return userDao.listUsers();
+    public Response getUser()  {
+        return Response.status(200).entity(userDao.listUsers()).build();
     }
 
     @DELETE
