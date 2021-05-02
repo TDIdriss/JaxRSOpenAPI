@@ -52,6 +52,7 @@ public class FicheResource {
                 }
 
         ficheDao.save(fiche1);
+
     }
 
     @PUT
@@ -71,6 +72,8 @@ public class FicheResource {
         ficheDao.delete(ficheDao.ficheById(ficheId));
         fiche1.setId(ficheId);
         ficheDao.save(fiche1);
+
+
     }
 
 
